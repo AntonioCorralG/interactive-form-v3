@@ -2,7 +2,7 @@
 let fullName = document.getElementById("name");
 fullName.focus();
 
-//elements with variable names
+//elements assigned to variable names
 const jobTitle = document.getElementById("title");
 const otherJob = document.getElementById("other-job-role");
 const colorSelection = document.getElementById("color");
@@ -102,6 +102,8 @@ paymentOptions.addEventListener("change", (e) => {
 });
 
 //Part 8: Form Validation
+//event listener that listens for the submit button
+//if there is an error in the validation the efault is prevented
 
 formElement.addEventListener("submit", (e) => {
   const nameError = isValidName(fullName);
@@ -119,6 +121,7 @@ formElement.addEventListener("submit", (e) => {
     e.preventDefault();
   }
 
+  //groups the credit card into nested if staments to allows for the submission through bitcoin or paypal
   const ccError = isValidCardNumber(cardNumber);
   const zipError = isValidZipCode(zipCode);
   const CVVError = isValidCVV(CVV);
@@ -137,6 +140,10 @@ formElement.addEventListener("submit", (e) => {
   }
 });
 
+
+//each function below tests whether the input by the user meets the regex requirement
+//if it does then it returns true to the event listener above and
+//if it does not pass then it returns false and prevents the default loading--in this case it also adds not valid so the user can easily identify the error
 function isValidName(fullName) {
   let nameRegEx = /^[a-z]|\\Sd*$/i.test(fullName.value);
   if (nameRegEx === true) {
