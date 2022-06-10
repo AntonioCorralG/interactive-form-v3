@@ -104,144 +104,127 @@ paymentOptions.addEventListener("change", (e) => {
 //Part 8: Form Validation
 
 formElement.addEventListener("submit", (e) => {
-  const nameField = fullName.value;
-  const nameError = isValidName(nameField);
+  const nameError = isValidName(fullName);
   if (!nameError) {
     e.preventDefault();
   }
 
-  const emailField = email.value;
-  const emailError = isValidEmail(emailField);
+  const emailError = isValidEmail(email);
   if (!emailError) {
     e.preventDefault();
   }
 
-  //const activitiesField = activities.value;
-  const activitiesError = areActivitesMarked(totalCost);
+  const activitiesError = isValidActivities(activities);
   if (!activitiesError) {
     e.preventDefault();
   }
 
-  const ccField = cardNumber.value;
-  const ccError = isValidCardNumber(ccField);
+  const ccError = isValidCardNumber(cardNumber);
+  const zipError = isValidZipCode(zipCode);
+  const CVVError = isValidCVV(CVV);
   if (paymentOptions === creditCard) {
     if (!ccError) {
       e.preventDefault();
     }
 
-    const zipCodeField = zipCode.value;
-    const zipError = isValidZipCode(zipCodeField);
     if (!zipError) {
       e.preventDefault();
     }
 
-    const CVVField = CVV.value;
-    const CVVError = isValidCVV(CVVField);
     if (!CVVError) {
       e.preventDefault();
     }
   }
-  //debugger;
-  // results =
-  //     // if (
-  //     //     isValidName() &&
-  //     //     isValidEmail() &&
-  //     //     isValidActivities() &&
-  //     //      isValidCardNumber()
-  //     //   ) {
-
-  //     //     console.log("correct");
-  //     //     alert("Thank you for your submission!");
-  //     //   } else {
-  //     //     e.preventDefault();
-  //     //     isValidName();
-  //     //     isValidEmail();
-  //     //     isValidCardNumber();
-  //     //     // isValidActivities();
-  //     //     isValidCVV();
-  //     //     isValidZipCode();
-  //     //     //  alert("Incorrect user inputs");
-
-  //     //     creditCard.className = 'not-valid';
-  //     //     creditCard.className.remove = 'valid';
-  //     //     creditCard.lastElementChild.style.display = 'initial';
-  //     //     activities.className = 'not-valid';
-  //     //     activities.className.remove = 'valid';
-  //     //     activities.lastElementChild.style.display = 'initial';
-  //     //   }
 });
 
-function isValidName(name) {
-  console.log("name received is", name);
-
-  return /^[a-z]|\d*$/i.test(name);
+function isValidName(fullName) {
+  let nameRegEx = /^[a-z]|\\Sd*$/i.test(fullName.value);
+  if (nameRegEx === true) {
+    fullName.parentNode.className = "valid";
+    fullName.parentNode.lastElementChild.style.display = "none";
+    fullName.parentNode.className.remove = "not-valid";
+    return true;
+  } else {
+    fullName.parentNode.className = "not-valid";
+    fullName.parentNode.className.remove = "valid";
+    fullName.parentNode.lastElementChild.style.display = "initial";
+    return false;
+  }
 }
 
 function isValidEmail(email) {
-  console.log("Email received is ", email);
-  return /^\[a-z]|\d|[A-Z]/.test(email);
+  let emailRegEx = /^\[a-z]|\d|[A-Z]/.test(email.value);
+  if (emailRegEx) {
+    email.parentNode.className = "valid";
+    email.parentNode.lastElementChild.style.display = "none";
+    email.parentNode.className.remove = "not-valid";
+    return true;
+  } else {
+    email.parentNode.className = "not-valid";
+    email.parentNode.className.remove = "valid";
+    email.parentNode.lastElementChild.style.display = "initial";
+    return false;
+  }
 }
-
 function isValidActivities(activities) {
-  // let activitiesBox = document.getElementById("activities-box")
   if (totalCost > 0) {
     activities.className = "valid";
     activities.lastElementChild.style.display = "none";
     activities.className.remove = "not-valid";
+    return true;
   } else {
     activities.className = "not-valid activities";
     activities.className.remove = "valid";
     activities.lastElementChild.style.display = "initial";
+    return false;
   }
 }
 
-function areActivitesMarked(totalCost) {
-  return totalCost > 0 ? true : false;
-}
-
-function isValidCardNumber(ccNum) {
-  console.log("credit card number is ", ccNum);
-  return /^\d{4}\d{4}\d{4}\d{4}$/.test(ccNum);
-}
-function isValidZipCode(zip) {
-  console.log("zip code is ", zip);
-  return /^\d{5}$/.test(zip);
-}
-
-function isValidCVV(CVV) {
-  console.log("CVV is ", CVV);
-  return /^\d{3}$/.test(CVV);
-}
-
-function showOrHideTip(show, element) {
-  // show element when show is true, hide when false
-  if (show) {
-    element.style.display = "inherit";
+function isValidCardNumber(cardNumber) {
+  let cardNumRegEx = /^\d{4}\d{4}\d{4}\d{4}$/.test(cardNumber.value);
+  if (cardNumRegEx) {
+    cardNumber.parentNode.className = "valid";
+    cardNumber.parentNode.lastElementChild.style.display = "none";
+    cardNumber.parentNode.className.remove = "not-valid";
+    return true;
   } else {
-    element.style.display = "none";
+    cardNumber.parentNode.className = "not-valid";
+    cardNumber.parentNode.className.remove = "valid";
+    cardNumber.parentNode.lastElementChild.style.display = "initial";
+    return false;
   }
 }
-//Borrowed this closure function from treehouse. Link below:
-//https://teamtreehouse.com/library/validating-a-username
-// function createListener(validator) {
-//     return e => {
-//       const text = e.target.value;
-//       const valid = validator(text);
-//       const showTip = text !== "" && !valid;
-//       const tooltip = e.target.nextElementSibling;
-//       showOrHideTip(showTip, tooltip);
-//     };
-//   }
-
-// fullName.addEventListener('input',createListener(isValidName));
-// email.addEventListener('input',createListener(isValidEmail));
-// // activities.addEventListener('change',createListener(isValidActivity));
-// cardNumber.addEventListener('input', createListener(isValidCardNumber));
-// zipCode.addEventListener('input', createListener(isValidZipCode))
-// CVV.addEventListener('input', createListener(isValidCVV));
+function isValidZipCode(zipCode) {
+  let zipRegEx = /^\d{5}$/.test(zipCode.value);
+  if (zipRegEx) {
+    zipCode.parentNode.className = "valid";
+    zipCode.parentNode.lastElementChild.style.display = "none";
+    zipCode.parentNode.className.remove = "not-valid";
+    return true;
+  } else {
+    zipCode.parentNode.className = "not-valid";
+    zipCode.parentNode.className.remove = "valid";
+    zipCode.parentNode.lastElementChild.style.display = "initial";
+    return false;
+  }
+}
+function isValidCVV(CVV) {
+  let CVVRegEx = /^\d{3}$/.test(CVV.value);
+  if (CVVRegEx) {
+    CVV.parentNode.className = "valid";
+    CVV.parentNode.lastElementChild.style.display = "none";
+    CVV.parentNode.className.remove = "not-valid";
+    return true;
+  } else {
+    CVV.parentNode.className = "not-valid";
+    CVV.parentNode.className.remove = "valid";
+    CVV.parentNode.lastElementChild.style.display = "initial";
+    return false;
+  }
+}
 
 //Step 9: Accesibility
-
+//Runs a loop for the clicked checkbox to ad a focus and help the user see selections
 for (let i = 0; i < checkbox.length; i++) {
   checkbox[i].addEventListener("focus", (e) => {
     e.target.parentElement.classList.add("focus");
