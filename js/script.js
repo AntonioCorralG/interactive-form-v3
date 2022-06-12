@@ -160,7 +160,7 @@ function isValidName(fullName) {
 }
 
 function isValidEmail(email) {
-  let emailRegEx = /^\[a-z]|\d|[A-Z]/.test(email.value);
+  let emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.value);
   if (emailRegEx) {
     email.parentNode.className = "valid";
     email.parentNode.lastElementChild.style.display = "none";
@@ -188,7 +188,7 @@ function isValidActivities(activities) {
 }
 
 function isValidCardNumber(cardNumber) {
-  let cardNumRegEx = /^\d{4}\d{4}\d{4}\d{4}$/.test(cardNumber.value);
+  let cardNumRegEx = /^\d{13,16}$/.test(cardNumber.value);
   if (cardNumRegEx) {
     cardNumber.parentNode.className = "valid";
     cardNumber.parentNode.lastElementChild.style.display = "none";
