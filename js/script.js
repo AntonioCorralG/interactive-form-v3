@@ -175,12 +175,12 @@ function isValidEmail(email) {
 }
 function isValidActivities(activities) {
   if (totalCost > 0) {
-    activities.className = "valid";
+    activities.className = "valid activities";
     activities.lastElementChild.style.display = "none";
     activities.className.remove = "not-valid";
     return true;
   } else {
-    activities.className = "not-valid activities";
+    activities.className = "not-valid activities ";
     activities.className.remove = "valid";
     activities.lastElementChild.style.display = "initial";
     return false;
@@ -240,3 +240,5 @@ for (let i = 0; i < checkbox.length; i++) {
     e.target.parentElement.classList.remove("focus");
   });
 }
+
+
