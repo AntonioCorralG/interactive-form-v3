@@ -125,11 +125,10 @@ formElement.addEventListener("submit", (e) => {
   const ccError = isValidCardNumber(cardNumber);
   const zipError = isValidZipCode(zipCode);
   const CVVError = isValidCVV(CVV);
-  if (paymentOptions === creditCard) {
+  if (paymentOptions.value === paymentOptions[1].value) {
     if (!ccError) {
       e.preventDefault();
     }
-
     if (!zipError) {
       e.preventDefault();
     }
@@ -139,6 +138,8 @@ formElement.addEventListener("submit", (e) => {
     }
   }
 });
+
+
 
 
 //each function below tests whether the input by the user meets the regex requirement
@@ -240,5 +241,6 @@ for (let i = 0; i < checkbox.length; i++) {
     e.target.parentElement.classList.remove("focus");
   });
 }
+
 
 
